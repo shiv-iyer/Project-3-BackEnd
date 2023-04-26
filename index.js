@@ -1,5 +1,5 @@
 // preemptive requirements
-const express = require('express');
+const express = require("express");
 const hbs = require("hbs");
 const wax = require('wax-on');
 require("dotenv").config();
@@ -24,11 +24,15 @@ app.use(
     })
 );
 
+// import the card route
+const cardRoute = require("./routes/cards.js");
+
 // main function
 async function main() {
-    app.get("/", (req, res) => {
-        res.send("sup");
-    });
+
+    // instead of app.get, we use app.use because we are using our route
+    // all the app.gets will be inside the routes
+    app.use("/cards", cardRoute);
 }
 
 main();
