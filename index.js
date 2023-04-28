@@ -11,13 +11,14 @@ let app = express();
 app.set("view engine", "hbs");
 
 // static folder
+// essentially, contains any content not from routes (CSS files, images, and JS to run on the browser)
 app.use(express.static("public"));
 
 // setup wax-on
 wax.on(hbs.handlebars);
 wax.setLayoutPath("./views/layouts");
 
-// enable forms
+// enable forms (by enabling req.body, without this req.body will be undefined)
 app.use(
     express.urlencoded({
         extended: false
