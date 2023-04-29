@@ -14,6 +14,18 @@ app.set("view engine", "hbs");
 // essentially, contains any content not from routes (CSS files, images, and JS to run on the browser)
 app.use(express.static("public"));
 
+// I was receiving a weird error that stated my css file had the wrong MIME type, and strict MIME checking is enabled.
+// therefore, a workaround using express.static and some built-in Node.js tools:
+
+// built-in Node.js path module: which provides utilities for working with directories and file paths.
+const path = require('path');
+
+// using the express.static middleware to serve static files: from the assets folder. 
+// the path.join code constructs an absolute path to the 'assets' folder; __dirname is a built-in Node.js variable that represents
+// the directory of the currently executing script. therefore, we create an absolute path by joining the current directory with the assets
+// folder's path. 
+app.use('/assets', express.static(path.join(__dirname, 'assets')));
+
 // setup wax-on
 wax.on(hbs.handlebars);
 wax.setLayoutPath("./views/layouts");

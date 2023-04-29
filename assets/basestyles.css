@@ -1,0 +1,8 @@
+.tableContainer {
+    border: 4px double black;
+}
+
+.tableHeader {
+    text-align: center; 
+    text-decoration: underline;
+}

@@ -1,16 +1,15 @@
 {{#extends "base"}}
 
     {{#block "content"}}
-    <div style="border: 4px double black" class="">
-        <h1 style="text-align: center; text-decoration: underline" class="mb-3">Cards Available!</h1>
+    <div class="tableContainer">
+        <h1 id="tableHeader" class="tableHeader mb-3">Cards Available!</h1>
         {{!comment in hbs}}
         {{!create a table to store the data from the cards collection, passed in from the bookshelf model}}
             <table class="table">
-                <thead style="border: 4px double black">
+                <thead>
                     <tr>
                         {{!create a table heading for each column in the cards table}}
                         {{!id, name, rarity, format, condition, cost, stage, hit_points, flavor_text, image_url, thumbnail_url}}
-                        {{!TODO: add in image url and thumbnail url later?}}
                         <th>ID</th>
                         <th>Name</th>
                         <th>Rarity</th>
@@ -20,6 +19,7 @@
                         <th>Stage</th>
                         <th>Hit Points</th>
                         <th>Flavor Text</th>
+                        {{!TODO: add in image url and thumbnail url later?}}
                     </tr>
                 </thead>
                 <tbody>
