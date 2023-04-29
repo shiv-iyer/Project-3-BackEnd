@@ -1,3 +1,7 @@
+// Bookshelf is an ORM (Object Relational Mapper) solution
+// We use it for: independence from SQL syntax (or any other database) — our code will work with all kinds of SQL databases
+// also, most ORM solutions, such as Bookshelf, have some basic security included.
+
 // Set up the database connection; details should match those in database.json
 const knex = require('knex')({
     client: 'mysql',

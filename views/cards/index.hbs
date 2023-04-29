@@ -1,6 +1,44 @@
 {{#extends "base"}}
 
     {{#block "content"}}
-    <h1>HELLO WORLD</h1>
+    <div style="border: 4px double black" class="">
+        <h1 style="text-align: center; text-decoration: underline" class="mb-3">Cards Available!</h1>
+        {{!comment in hbs}}
+        {{!create a table to store the data from the cards collection, passed in from the bookshelf model}}
+            <table class="table">
+                <thead style="border: 4px double black">
+                    <tr>
+                        {{!create a table heading for each column in the cards table}}
+                        {{!id, name, rarity, format, condition, cost, stage, hit_points, flavor_text, image_url, thumbnail_url}}
+                        {{!TODO: add in image url and thumbnail url later?}}
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Rarity</th>
+                        <th>Format</th>
+                        <th>Condition</th>
+                        <th>Cost</th>
+                        <th>Stage</th>
+                        <th>Hit Points</th>
+                        <th>Flavor Text</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{!perform an each command to iterate through the cards, displaying them under the table headers}}
+                    {{#each cards}}
+                    <tr style="text-align: center">
+                        <td>{{this.id}}</td>
+                        <td>{{this.name}}</td>
+                        <td>{{this.rarity}}</td>
+                        <td>{{this.format}}</td>
+                        <td>{{this.condition}}</td>
+                        <td>${{this.cost}}</td>
+                        <td>{{this.stage}}</td>
+                        <td>{{this.hit_points}}</td>
+                        <td>{{this.flavor_text}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+    </div>
     {{/block}}
 {{/extends}}
