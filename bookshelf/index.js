@@ -1,4 +1,4 @@
-// Set up the database connection
+// Set up the database connection; details should match those in database.json
 const knex = require('knex')({
     client: 'mysql',
     connection: {
