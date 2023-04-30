@@ -1,13 +1,13 @@
 {{#extends "base"}}
 
     {{#block "content"}}
-    <div class="tableContainer">
+    <div class="tableContainer p-3">
         <h1 id="tableHeader" class="tableHeader mb-3">Cards Available!</h1>
         {{!comment in hbs}}
         {{!create a table to store the data from the cards collection, passed in from the bookshelf model}}
             <table class="table">
                 <thead>
-                    <tr>
+                    <tr style="text-align: center">
                         {{!create a table heading for each column in the cards table}}
                         {{!id, name, rarity, format, condition, cost, stage, hit_points, flavor_text, image_url, thumbnail_url}}
                         <th>ID</th>
