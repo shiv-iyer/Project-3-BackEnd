@@ -33,35 +33,37 @@ const createCardForm = () => {
     return forms.create({
         // one field for each columm in the table. Excluding ID, which will be assigned by default I presume
         'name': fields.string({
-            required: true,
+            required: validators.required("Please enter a name for your card!"),
             errorAfterField: true,
             cssClasses: {
                 label: ['form-label']
-            }
+            },
+            // try validating for max length, doesn't seem to work...
+            'valdiators': [validators.maxlength(5, "Your card's name cannot exceed 5 characters!")]
         }),
         'rarity': fields.string({
-            required: true,
+            required: validators.required("Please enter your card's rarity!"),
             errorAfterField: true,
             cssClasses: {
                 label: ['form-label']
             }
         }),
         'format': fields.string({
-            required: true,
+            required: validators.required("Please enter the format your card is played in!"),
             errorAfterField: true,
             cssClasses: {
                 label: ['form-label']
             }
         }),
         'condition': fields.string({
-            required: true,
+            required: validators.required("Please enter the condition of your card!"),
             errorAfterField: true,
             cssClasses: {
                 label: ['form-label']
             }
         }),
         'cost': fields.string({
-            required: true,
+            required: validators.required("Please enter the cost of your card (in $ / dollars)!"),
             errorAfterField: true,
             cssClasses: {
                 label: ['form-label']
@@ -71,35 +73,35 @@ const createCardForm = () => {
             'validators': [validators.integer()]
         }),
         'stage': fields.string({
-            required: true,
+            required: validators.required("Please enter your card's current stage!"),
             errorAfterField: true,
             cssClasses: {
                 label: ['form-label']
             }
         }),
         'hit_points': fields.string({
-            required: true,
+            required: validators.required("Please enter your card's HP!"),
             errorAfterField: true,
             cssClasses: {
                 label: ['form-label']
             }
         }),
         'flavor_text': fields.string({
-            required: true,
+            required: validators.required("Please enter your card's flavor text!"),
             errorAfterField: true,
             cssClasses: {
                 label: ['form-label']
             }
         }),
         'image_url': fields.string({
-            required: true,
+            required: validators.required("Please enter an image URL for your card!"),
             errorAfterField: true,
             cssClasses: {
                 label: ['form-label']
             }
         }),
         'thumbnail_url': fields.string({
-            required: true,
+            required: validators.required("Please enter a thumbnail URL for your card!"),
             errorAfterField: true,
             cssClasses: {
                 label: ['form-label']
