@@ -6,7 +6,10 @@
     <form method="POST">
         {{!render out raw HTML: producing the create Card form that we pass in from the route}}
         {{{form}}}
-        <input type="submit" value="Add Card" class="btn btn-primary mt-3"/>
+        <div class="formButtonContainer">
+            <input type="submit" value="Add Card" class="btn btn-primary mt-3"/>
+            <a href="/cards" class="btn btn-info">Go Back</a>
+        </div>
     </form>
 {{/block}}
 

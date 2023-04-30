@@ -4,7 +4,10 @@
     <h1>Update Card: {{card.name}}</h1>
     <form method="POST">
         {{{form}}}
-        <input type="submit" value="Update Card" class="btn btn-primary mt-3"/>
+        <div class="formButtonContainer">
+            <input type="submit" value="Update Card" class="btn btn-primary mt-3"/>
+            <a href="/cards" class="btn btn-info">Go Back</a>
+        </div>
     </form>
 {{/block}}
 

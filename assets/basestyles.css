@@ -11,3 +11,9 @@
     transform:scale(1.05);
     transition: all 0.3s ease;
 }
+
+.formButtonContainer {
+    display: flex;
+    /* for whatever reason, flex-end is the only alignment that truly aligns the buttons */
+    align-items: flex-end;
+}
