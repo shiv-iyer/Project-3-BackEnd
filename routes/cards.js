@@ -8,6 +8,9 @@ const router = express.Router();
 // ★ Step #1: import in the Card model from the models module
 const {Card} = require('../models');
 
+// import in forms
+const { createCardForm, bootstrapField } = require ("../forms");
+
 // res.render will automatically go to the views folder,
 // because we set the view engine to handlebars, we don't need to write index.hbs, just index
 router.get("/", async (req, res) => {
@@ -17,6 +20,15 @@ router.get("/", async (req, res) => {
     res.render("cards/index", {
         'cards': cards.toJSON()
     });
+});
+
+// second route for Cards, to render the form for creation
+router.get("/create", async (req, res) => {
+    const cardForm = createCardForm();
+    res.render('cards/create', {
+        // format the form using Bootstrap styles
+        'form': cardForm.toHTML(bootstrapField)
+    })
 });
 
 // export the Router out
