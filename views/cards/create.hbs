@@ -1,6 +1,7 @@
+{{!as a reminder, base and content need to be wrapped within quotation marks: "", otherwise nothing will display!}}
 {{#extends "base"}}
 
-{{#block content}}
+{{#block "content"}}
     <h1>Create New Card</h1>
     <form method="POST">
         {{!render out raw HTML: producing the create Card form that we pass in from the route}}

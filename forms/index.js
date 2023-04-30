@@ -65,7 +65,10 @@ const createCardForm = () => {
             errorAfterField: true,
             cssClasses: {
                 label: ['form-label']
-            }
+            },
+            // validators: to validate inputs, in this case to ensure an integer is input
+            // all validators available here: https://github.com/caolan/forms
+            'validators': [validators.integer()]
         }),
         'stage': fields.string({
             required: true,
