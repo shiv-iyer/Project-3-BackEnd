@@ -31,7 +31,7 @@ router.get("/create", async (req, res) => {
     })
 });
 
-// Function to process the form once it's submitted
+// route to process the form once it's submitted
 router.post("/create", async (req, res) => {
     const cardForm = createCardForm();
     // use the handle function of the form to process the request
@@ -64,8 +64,66 @@ router.post("/create", async (req, res) => {
     })
 });
 
-// third function for Cards, to update!
+// fourth route for Cards, to update!
+router.get("/:card_id/update", async (req, res) => {
+    // get the card ID from the request's parameters
+    const cardId = req.params.card_id;
+    // retrieve the card first
+    const card = await Card.where({
+        'id': cardId
+    }).fetch({
+        require: true
+    });
 
+    const cardForm = createCardForm();
+
+    // fill in all of the fields in the form with the card's existing values
+    cardForm.fields.name.value = card.get('name');
+    cardForm.fields.rarity.value = card.get('rarity');
+    cardForm.fields.format.value = card.get('format');
+    cardForm.fields.condition.value = card.get('condition');
+    cardForm.fields.cost.value = card.get('cost');
+    cardForm.fields.stage.value = card.get('stage');
+    cardForm.fields.hit_points.value = card.get('hit_points');
+    cardForm.fields.flavor_text.value = card.get('flavor_text');
+    cardForm.fields.image_url.value = card.get('image_url');
+    cardForm.fields.thumbnail_url.value = card.get('thumbnail_url');
+
+    // render the form with these updated values
+    res.render('cards/update', {
+        'form': cardForm.toHTML(bootstrapField),
+        'card': card.toJSON()
+    });
+
+});
+
+// route to process the updated card form
+router.post('/:card_id/update', async (req, res) => {
+    const cardId = req.params.card_id;
+    // first, fetch the card that we want to update
+    const card = await Card.where({
+        'id': cardId
+    }).fetch({
+        require: true
+    });
+
+    // next, process the form, if successful we use card.set to overwrite the original card's data with the new data from the form
+    const cardForm = createCardForm();
+    cardForm.handle(req, {
+        'success': async (form) => {
+            card.set(form.data);
+            card.save();
+            res.redirect('/cards');
+        },
+        // if there's an error with the form, just re-render the form to display the error messages
+        'error': async (form) => {
+            res.render('cards/update', {
+                'form': form.toHTML(bootstrapField),
+                'card': card.toJSON()
+            })
+        }
+    });
+});
 
 // export the Router out
 module.exports = router;
