@@ -84,7 +84,8 @@ const createCardForm = () => {
             errorAfterField: true,
             cssClasses: {
                 label: ['form-label']
-            }
+            },
+            'validators': [validators.integer()]
         }),
         'flavor_text': fields.string({
             required: validators.required("Please enter your card's flavor text!"),
@@ -98,14 +99,16 @@ const createCardForm = () => {
             errorAfterField: true,
             cssClasses: {
                 label: ['form-label']
-            }
+            },
+            'validators': [validators.url()]
         }),
         'thumbnail_url': fields.string({
             required: validators.required("Please enter a thumbnail URL for your card!"),
             errorAfterField: true,
             cssClasses: {
                 label: ['form-label']
-            }
+            },
+            'validators': [validators.url()]
         })
     });
 };
