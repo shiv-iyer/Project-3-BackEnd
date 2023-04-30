@@ -125,5 +125,36 @@ router.post('/:card_id/update', async (req, res) => {
     });
 });
 
+// CRU complete. final routing requirements: for deletion.
+router.get('/:card_id/delete', async (req, res) => {
+    const cardId = req.params.card_id;
+    // fetch the card to be deleted
+    const card = await Card.where({
+        'id': cardId
+    }).fetch({
+        require: true
+    });
+
+    // render the deletion hbs file, passing in the card to be deleted
+    res.render('cards/delete', {
+        'card': card.toJSON()
+    });
+});
+
+// process the deletion
+router.post('/:card_id/delete', async (req, res) => {
+    const cardId = req.params.card_id;
+    // fetch the card to be deleted
+    const card = await Card.where({
+        'id': cardId
+    }).fetch({
+        require: true
+    });
+    
+    // delete the card.
+    await card.destroy();
+    res.redirect('/cards');
+})
+
 // export the Router out
 module.exports = router;
