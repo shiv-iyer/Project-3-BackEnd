@@ -4,6 +4,11 @@ const hbs = require("hbs");
 const wax = require('wax-on');
 require("dotenv").config();
 
+// other requirements: for session
+const session = require("express-session");
+const flash = require("connect-flash");
+const FileStore = require("session-file-store")(session);
+
 // create an instance of Express app
 let app = express();
 
@@ -36,6 +41,14 @@ app.use(
         extended: false
     })
 );
+
+// set up sessions, before importing routes
+app.use(session({
+    store: new FileStore(),
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true
+}));
 
 // import the card route
 const cardRoute = require("./routes/cards.js");
