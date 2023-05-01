@@ -32,7 +32,9 @@ router.get("/", async (req, res) => {
 router.get("/create", async (req, res) => {
     // initialize expansions
     const allExpansions = await cardDataLayer.getAllExpansions();
-    const cardForm = createCardForm(allExpansions);
+    // now types too
+    const allTypes = await cardDataLayer.getAllTypes();
+    const cardForm = createCardForm(allExpansions, allTypes);
     res.render('cards/create', {
         // format the form using Bootstrap styles
         'form': cardForm.toHTML(bootstrapField)
@@ -42,27 +44,28 @@ router.get("/create", async (req, res) => {
 // route to process the form once it's submitted
 router.post("/create", async (req, res) => {
     const allExpansions = await cardDataLayer.getAllExpansions();
-    const cardForm = createCardForm(allExpansions);
+    const allTypes = await cardDataLayer.getAllTypes();
+    const cardForm = createCardForm(allExpansions, allTypes);
     // use the handle function of the form to process the request
     cardForm.handle(req, {
         // success function: function to be run when the form is successfully processed
         'success': async (form) => {
             // create a new Card object from the Card model, which represents one row in the table
-            const card = new Card();
-            // set all the fields from the form
-            // name rarity format condition cost stage hit_points flavor_text image_url thumbnail_url
-            card.set('name', form.data.name);
-            card.set('rarity', form.data.rarity);
-            card.set('format', form.data.format);
-            card.set('condition', form.data.condition);
-            card.set('cost', form.data.cost);
-            card.set('stage', form.data.stage);
-            card.set('hit_points', form.data.hit_points);
-            card.set('flavor_text', form.data.flavor_text);
-            card.set('expansion_id', form.data.expansion_id);
-            // card.set('image_url', form.data.image_url);
-            // card.set('thumbnail_url', form.data.thumbnail_url);
+            // instead of hardcoding all the fields with card.set, we can just pass in form.data here
+
+            // destructure the form
+            let {types, ...cardData} = form.data;
+            // create the card with every field except types
+            const card = new Card(cardData);
             await card.save();
+
+            // save the many to many relationship 
+            // if the user selected types:
+            if (types) {
+                // card.type instead of card.types() because the relationship name is type singular
+                await card.type().attach(types.split(","));
+            }
+
             res.redirect('/cards');
         },
         // error function: in the event that there is an error. we can re-render the form with errors displayed.
@@ -86,7 +89,8 @@ router.get("/:card_id/update", async (req, res) => {
     });
 
     const allExpansions = await cardDataLayer.getAllExpansions();
-    const cardForm = createCardForm(allExpansions);
+    const allTypes = await cardDataLayer.getAllTypes();
+    const cardForm = createCardForm(allExpansions, allTypes);
 
     // fill in all of the fields in the form with the card's existing values
     cardForm.fields.name.value = card.get('name');
@@ -120,7 +124,9 @@ router.post('/:card_id/update', async (req, res) => {
     });
 
     // next, process the form, if successful we use card.set to overwrite the original card's data with the new data from the form
-    const cardForm = createCardForm();
+    const allExpansions = await cardDataLayer.getAllExpansions();
+    const allTypes = await cardDataLayer.getAllTypes();
+    const cardForm = createCardForm(allExpansions, allTypes);
     cardForm.handle(req, {
         'success': async (form) => {
             card.set(form.data);

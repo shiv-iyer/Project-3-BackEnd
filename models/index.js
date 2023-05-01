@@ -11,7 +11,12 @@ const Card = bookshelf.model('Card', {
     expansion() {
         // referring to the expansion model
         // if not following the naming convention, also include the FK name
+        // belongsTo singular is one to many
         return this.belongsTo("Expansion", "expansion_id");
+    },
+    // many to many with types
+    type() {
+        return this.belongsToMany("Type");
     }
 });
 
@@ -23,8 +28,16 @@ const Expansion = bookshelf.model('Expansion', {
         // referring to the card model
         return this.hasMany("Card");
     },
-
 });
 
+const Type = bookshelf.model('Type', {
+    tableName: 'types',
+    // it is through cards so we use card
+    card() {
+        // when many many, use belongsToMany
+        return this.belongsToMany('Card');
+    }
+})
+
 // export the Card object that stores the Card model out
-module.exports = {Card, Expansion};
+module.exports = {Card, Expansion, Type};

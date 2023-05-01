@@ -31,7 +31,7 @@ var bootstrapField = function (name, object) {
 };
 
 // function to create a card using Caolan Forms!
-const createCardForm = (expansions) => {
+const createCardForm = (expansions, types) => {
     return forms.create({
         // one field for each columm in the table. Excluding ID, which will be assigned by default I presume
         'name': fields.string({
@@ -95,6 +95,18 @@ const createCardForm = (expansions) => {
             cssClasses: {
                 label: ['form-label']
             }
+        }),
+        'types': fields.string({
+            // label is to rename the field on the UI
+            required: true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            // multipleSelect for many to many
+            widget: widgets.multipleSelect(),
+            // choices for the widget aka the select: expansions that we passed in to the form
+            choices: types
         }),
         // adding the expansion ID, just use the column name
         'expansion_id': fields.string({

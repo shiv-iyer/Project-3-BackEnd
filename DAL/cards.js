@@ -2,7 +2,7 @@
 // anything to do with cards will go here, including expansions, types
 
 // import in models related to cards
-const {Card, Expansion} = require("../models");
+const {Card, Expansion, Type} = require("../models");
 
 
 const getAllCards = async () => {
@@ -17,7 +17,13 @@ const getAllExpansions = async () => {
     return expansions;
 };
 
+const getAllTypes = async () => {
+    const types = await Type.fetchAll().map(t => [t.get("id"), t.get("type")]);
+    return types;
+}
+
 module.exports = {
     getAllCards,
-    getAllExpansions
+    getAllExpansions,
+    getAllTypes
 }

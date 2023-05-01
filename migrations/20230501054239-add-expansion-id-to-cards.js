@@ -21,7 +21,7 @@ exports.up = function(db) {
     // expansion ID has to be the same as the primary key in expansion (ex. type mismatch will not work, both must be unsigned, etc.)
     type: "int",
     unsigned: true,
-    notNull: true
+    notNull: true,
   })
 };
 
