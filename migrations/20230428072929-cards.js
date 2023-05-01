@@ -30,9 +30,7 @@ exports.up = function(db) {
     cost: { type: 'int', unsigned: true, notNull: true},
     stage: { type: 'string', length: 7, notNull: true},
     hit_points: { type: 'smallint', notNull: true},
-    flavor_text: { type: 'text', notNull: true},
-    image_url: { type: 'string', length: 2048, notNull: true},
-    thumbnail_url: { type: 'string', length: 2048, notNull: true}
+    flavor_text: { type: 'text', notNull: true}
   });
 };
 

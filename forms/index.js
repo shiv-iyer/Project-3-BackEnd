@@ -93,23 +93,23 @@ const createCardForm = () => {
             cssClasses: {
                 label: ['form-label']
             }
-        }),
-        'image_url': fields.string({
-            required: validators.required("Please enter an image URL for your card!"),
-            errorAfterField: true,
-            cssClasses: {
-                label: ['form-label']
-            },
-            'validators': [validators.url()]
-        }),
-        'thumbnail_url': fields.string({
-            required: validators.required("Please enter a thumbnail URL for your card!"),
-            errorAfterField: true,
-            cssClasses: {
-                label: ['form-label']
-            },
-            'validators': [validators.url()]
         })
+        // 'image_url': fields.string({
+        //     required: validators.required("Please enter an image URL for your card!"),
+        //     errorAfterField: true,
+        //     cssClasses: {
+        //         label: ['form-label']
+        //     },
+        //     'validators': [validators.url()]
+        // }),
+        // 'thumbnail_url': fields.string({
+        //     required: validators.required("Please enter a thumbnail URL for your card!"),
+        //     errorAfterField: true,
+        //     cssClasses: {
+        //         label: ['form-label']
+        //     },
+        //     'validators': [validators.url()]
+        // })
     });
 };
 
