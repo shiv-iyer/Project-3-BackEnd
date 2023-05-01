@@ -19,6 +19,7 @@
                         <th>Stage</th>
                         <th>Hit Points</th>
                         <th>Flavor Text</th>
+                        <th>Type</th>
                         <th>Expansion</th>
                         {{!add another table haeding for links to update and delete}}
                         <th>Links</th>
@@ -38,6 +39,12 @@
                         <td>{{this.stage}}</td>
                         <td>{{this.hit_points}}</td>
                         <td>{{this.flavor_text}}</td>
+                        <td>
+                            {{!each to iterate through the types and display with a fanceh badge}}
+                            {{#each this.type}}
+                                <span class="badge bg-info">{{this.type}}</span>
+                            {{/each}}
+                        </td>
                         <td>{{this.expansion.name}}</td>
                         {{!for update and delete}}
                         <td>

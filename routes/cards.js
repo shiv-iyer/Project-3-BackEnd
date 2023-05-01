@@ -85,7 +85,9 @@ router.get("/:card_id/update", async (req, res) => {
     const card = await Card.where({
         'id': cardId
     }).fetch({
-        require: true
+        require: true,
+        // with related for many to many relationship with type
+        withRelated:['type']
     });
 
     const allExpansions = await cardDataLayer.getAllExpansions();
@@ -102,6 +104,11 @@ router.get("/:card_id/update", async (req, res) => {
     cardForm.fields.hit_points.value = card.get('hit_points');
     cardForm.fields.flavor_text.value = card.get('flavor_text');
     cardForm.fields.expansion_id.value = card.get('expansion_id');
+
+    // pluck to retrieve types
+    let selectedTypes = await card.related('type').pluck('id');
+    cardForm.fields.types.value = selectedTypes;
+
     // cardForm.fields.image_url.value = card.get('image_url');
     // cardForm.fields.thumbnail_url.value = card.get('thumbnail_url');
 
@@ -120,7 +127,9 @@ router.post('/:card_id/update', async (req, res) => {
     const card = await Card.where({
         'id': cardId
     }).fetch({
-        require: true
+        require: true,
+        // load with the relationship to types
+        withRelated:['type']
     });
 
     // next, process the form, if successful we use card.set to overwrite the original card's data with the new data from the form
@@ -129,8 +138,22 @@ router.post('/:card_id/update', async (req, res) => {
     const cardForm = createCardForm(allExpansions, allTypes);
     cardForm.handle(req, {
         'success': async (form) => {
-            card.set(form.data);
+            // same as before, we destructure the form and set all fields except types, then do types after
+            let {types, ...cardData} = form.data;
+            card.set(cardData);
             card.save();
+
+            // update the types
+            let typeIds = types.split(',');
+            let existingTypeIds = await card.related('type').pluck('id');
+
+            // remove all the types that aren't selected anymore
+            let toRemove = existingTypeIds.filter(id => typeIds.includes(id) === false);
+            await card.type().detach(toRemove);
+            
+            // add in all the types selected in the form
+            await card.type().attach(typeIds);
+
             res.redirect('/cards');
         },
         // if there's an error with the form, just re-render the form to display the error messages
