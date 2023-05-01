@@ -17,6 +17,7 @@ exports.setup = function(options, seedLink) {
 // exports.up is to create the table
 exports.up = function(db) {
   return db.createTable('expansions', {
+    // notNull is always true for primary keys
     id: { type: 'int', primaryKey: true, autoIncrement: true, unsigned: true},
     name: {type: 'string', length: 100, notNull: true}
   });
