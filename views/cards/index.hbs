@@ -19,8 +19,9 @@
                         <th>Stage</th>
                         <th>Hit Points</th>
                         <th>Flavor Text</th>
+                        <th>Expansion</th>
                         {{!add another table haeding for links to update and delete}}
-                        <th></th>
+                        <th>Links</th>
                         {{!TODO: add in image url and thumbnail url later?}}
                     </tr>
                 </thead>
@@ -37,10 +38,13 @@
                         <td>{{this.stage}}</td>
                         <td>{{this.hit_points}}</td>
                         <td>{{this.flavor_text}}</td>
+                        <td>{{this.expansion.name}}</td>
                         {{!for update and delete}}
                         <td>
-                            <a href="/cards/{{this.id}}/update" class="btn btn-primary btn-sm mb-2">Update</a>
-                            <a href="/cards/{{this.id}}/delete" class="btn btn-danger btn-sm">Delete</a>
+                            <div class="linkContainer">
+                                <a href="/cards/{{this.id}}/update" class="btn btn-primary btn-sm mb-2">Update</a>
+                                <a href="/cards/{{this.id}}/delete" class="btn btn-danger btn-sm">Delete</a>
+                            </div>
                         </td>
                     </tr>
                     {{/each}}

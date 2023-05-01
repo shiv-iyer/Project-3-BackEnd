@@ -17,3 +17,10 @@
     /* for whatever reason, flex-end is the only alignment that truly aligns the buttons */
     align-items: flex-end;
 }
+
+.linkContainer {
+    display: flex;
+    justify-content: center;
+    /* weird again, but flex-start is the only alignment that works, so just going for it */
+    align-items: flex-start;
+}

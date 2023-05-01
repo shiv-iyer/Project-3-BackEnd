@@ -11,7 +11,7 @@ const Card = bookshelf.model('Card', {
     expansion() {
         // referring to the expansion model
         // if not following the naming convention, also include the FK name
-        return this.belongsTo("Expansion", "expansion_id")
+        return this.belongsTo("Expansion", "expansion_id");
     }
 });
 
@@ -27,4 +27,4 @@ const Expansion = bookshelf.model('Expansion', {
 });
 
 // export the Card object that stores the Card model out
-module.exports = {Card};
+module.exports = {Card, Expansion};

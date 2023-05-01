@@ -6,6 +6,8 @@ const forms = require("forms");
 // create shortcuts
 const fields = forms.fields;
 const validators = forms.validators;
+// widgets for select etc.
+const widgets = forms.widgets;
 
 // utilize Bootstrap to format the forms, enabling them to use Bootstrap's CSS classes
 var bootstrapField = function (name, object) {
@@ -29,7 +31,7 @@ var bootstrapField = function (name, object) {
 };
 
 // function to create a card using Caolan Forms!
-const createCardForm = () => {
+const createCardForm = (expansions) => {
     return forms.create({
         // one field for each columm in the table. Excluding ID, which will be assigned by default I presume
         'name': fields.string({
@@ -93,7 +95,23 @@ const createCardForm = () => {
             cssClasses: {
                 label: ['form-label']
             }
+        }),
+        // adding the expansion ID, just use the column name
+        'expansion_id': fields.string({
+            // label is to rename the field on the UI
+            label: 'Expansion',
+            required: true,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            // widget for select
+            widget: widgets.select(),
+            // choices for the widget aka the select: expansions that we passed in to the form
+            choices: expansions
         })
+
+
         // 'image_url': fields.string({
         //     required: validators.required("Please enter an image URL for your card!"),
         //     errorAfterField: true,
