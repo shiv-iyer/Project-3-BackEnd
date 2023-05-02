@@ -37,7 +37,7 @@ router.post("/register", (req, res) => {
             res.redirect("/users/login")
         },
         "error": (form) => {
-            res.render("/users/register", {
+            res.render("users/register", {
                 'form': form.toHTML(bootstrapField)
             });
         }

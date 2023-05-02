@@ -166,14 +166,14 @@ const createRegistrationForm = () => {
                 label: ['form-label']
             }
         }),
-        'password': fields.string({
+        'password': fields.password({
             required: true,
             errorAfterField: true,
             cssClasses: {
                 label: ['form-label']
             }
         }),
-        'confirm_password': fields.string({
+        'confirm_password': fields.password({
             required: true,
             errorAfterField: true,
             cssClasses: {
