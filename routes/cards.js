@@ -66,6 +66,9 @@ router.post("/create", async (req, res) => {
                 await card.type().attach(types.split(","));
             }
 
+            // flash message for successful addition!
+            req.flash("success_messages", `New card ${card.get('name')} has been successfully created!`);
+
             res.redirect('/cards');
         },
         // error function: in the event that there is an error. we can re-render the form with errors displayed.
@@ -154,6 +157,8 @@ router.post('/:card_id/update', async (req, res) => {
             // add in all the types selected in the form
             await card.type().attach(typeIds);
 
+            req.flash("success_messages", `Card ${card.get('name')} has been successfully updated!`);
+
             res.redirect('/cards');
         },
         // if there's an error with the form, just re-render the form to display the error messages
@@ -162,6 +167,7 @@ router.post('/:card_id/update', async (req, res) => {
                 'form': form.toHTML(bootstrapField),
                 'card': card.toJSON()
             })
+            //req.flash("error_messages", `Sorry, there was an error in your processing!`);
         }
     });
 });

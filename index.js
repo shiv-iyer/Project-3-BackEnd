@@ -50,6 +50,17 @@ app.use(session({
     saveUninitialized: true
 }));
 
+// set up flash messages
+app.use(flash());
+
+// register Flash middleware
+app.use(function (req, res, next) {
+    // store Flash in res.locals: res.locals stores variables that are available to all hbs files
+    res.locals.success_messages = req.flash("success_messages");
+    res.locals.error_messages = req.flash("error_messages");
+    next();
+})
+
 // import the card route
 const cardRoute = require("./routes/cards.js");
 
