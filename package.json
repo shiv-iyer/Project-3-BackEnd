@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "//comment": "-g is only for gitpod",
-    "monitor": "npm i nodemon && nodemon index.js",
+    "monitor": "npm i nodemon && nodemon index.js --ignore sessions",
     "//comment_2": "we can use NPM scripts to configure the shell script for running migrations. to run: `npm run migrate -- up` etc.",
     "migrate": "node node_modules/db-migrate/bin/db-migrate"
   },
