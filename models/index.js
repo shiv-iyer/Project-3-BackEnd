@@ -30,6 +30,7 @@ const Expansion = bookshelf.model('Expansion', {
     },
 });
 
+// Type Model
 const Type = bookshelf.model('Type', {
     tableName: 'types',
     // it is through cards so we use card
@@ -39,5 +40,10 @@ const Type = bookshelf.model('Type', {
     }
 })
 
+// User Model
+const User = bookshelf.model('User', {
+    tableName: 'users'
+});
+
 // export the Card object that stores the Card model out
-module.exports = {Card, Expansion, Type};
+module.exports = {Card, Expansion, Type, User};

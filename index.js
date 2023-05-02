@@ -64,12 +64,17 @@ app.use(function (req, res, next) {
 // import the card route
 const cardRoute = require("./routes/cards.js");
 
+// next, import in the user route
+const userRoute = require("./routes/users.js");
+
 // main function
 async function main() {
 
     // instead of app.get, we use app.use because we are using our route
     // all the app.gets will be inside the routes
     app.use("/cards", cardRoute);
+    // users route
+    app.use("/users", userRoute);
 }
 
 main();
