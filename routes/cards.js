@@ -20,7 +20,7 @@ router.get("/", async (req, res) => {
     // ★ Step #2: fetch all of the cards (ie. executes the following SQL code: SELECT * from cards)
     // (refactored to go into the DAL)
     const cards = await cardDataLayer.getAllCards();
-    console.log(cards.toJSON());
+    // console.log(cards.toJSON());
     // const cards = await Card.collection().fetch();
     // ★ Step #3: convert the retrieved collection to JSON, and pass it to the index.hbs file in the cards folder within views
     res.render("cards/index", {
@@ -65,6 +65,8 @@ router.post("/create", async (req, res) => {
                 // card.type instead of card.types() because the relationship name is type singular
                 await card.type().attach(types.split(","));
             }
+
+            req.flash("success_messages", `New card ${card.get('name')} has been successfully created!`);
 
             res.redirect('/cards');
         },

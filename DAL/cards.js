@@ -7,7 +7,6 @@ const {Card, Expansion, Type} = require("../models");
 
 const getAllCards = async () => {
     const cards = await Card.collection().fetch({withRelated: ['expansion', 'type']});
-    console.log(cards.toJSON().types);
     return cards;
 };
 
