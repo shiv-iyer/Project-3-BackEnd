@@ -2,6 +2,15 @@
 
 const express = require("express");
 const router = express.Router();
+// crypto: for hashing passwords
+const crypto = require("crypto");
+
+// function to generate a hashed password
+const getHashedPassword = (password) => {
+    const sha256 = crypto.createHash("sha256");
+    const hash = sha256.update(password).digest("base64");
+    return hash;
+}
 
 // import in the User model
 const { User } = require("../models");
@@ -28,7 +37,8 @@ router.post("/register", (req, res) => {
                 "first_name": form.data.first_name,
                 "last_name": form.data.last_name,
                 "username": form.data.username,
-                "password": form.data.password,
+                // generate a hashed password of the user's password
+                "password": getHashedPassword(form.data.password),
                 "email": form.data.email,
                 "contact_number": form.data.contact_number
             });
@@ -75,7 +85,8 @@ router.post("/login", (req, res) => {
                 res.redirect("/users/login");
             } else {
                 // if user found, check if the password details match
-                if (user.get('password') === form.data.password) {
+                // we need to compare the password in the database (hashed from before) with a hashed version of the form's password
+                if (user.get('password') === getHashedPassword(form.data.password)) {
                     // store user details in the session
                     const username = user.get('username');
                     req.session.user = {
