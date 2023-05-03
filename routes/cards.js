@@ -156,6 +156,8 @@ router.post('/:card_id/update', async (req, res) => {
             // add in all the types selected in the form
             await card.type().attach(typeIds);
 
+            req.flash("success_messages", `Card ${card.get('name')} has been successfully updated!`);
+
             res.redirect('/cards');
         },
         // if there's an error with the form, just re-render the form to display the error messages
@@ -194,6 +196,9 @@ router.post('/:card_id/delete', async (req, res) => {
         require: true
     });
     
+    // flash message before deletion so we can get the name of the card.
+    req.flash("success_messages", `Card ${card.get('name')} has been successfully deleted!`);
+
     // delete the card.
     await card.destroy();
     res.redirect('/cards');
