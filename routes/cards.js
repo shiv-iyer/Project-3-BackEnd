@@ -20,7 +20,8 @@ router.get("/", async (req, res) => {
     // ★ Step #2: fetch all of the cards (ie. executes the following SQL code: SELECT * from cards)
     // (refactored to go into the DAL)
     const cards = await cardDataLayer.getAllCards();
-    console.log(cards.toJSON());
+    console.log("🚀 ~ file: cards.js:23 ~ router.get ~ rds:", cards);
+    // console.log(cards.toJSON());
     // const cards = await Card.collection().fetch();
     // ★ Step #3: convert the retrieved collection to JSON, and pass it to the index.hbs file in the cards folder within views
     res.render("cards/index", {
@@ -55,8 +56,10 @@ router.post("/create", async (req, res) => {
 
             // destructure the form
             let {types, ...cardData} = form.data;
+            console.log("🚀 ~ file: cards.js:58 ~ 'success': ~ types:", types)
             // create the card with every field except types
             const card = new Card(cardData);
+            console.log("🚀 ~ file: cards.js:61 ~ 'success': ~ card:", card)
             await card.save();
 
             // save the many to many relationship 
