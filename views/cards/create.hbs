@@ -4,6 +4,8 @@
 {{#block "content"}}
     <h1>Create New Card</h1>
     <form method="POST">
+        {{!csrf}}
+        <input type="hidden" name="_csrf" value="{{csrfToken}}"/>
         {{!render out raw HTML: producing the create Card form that we pass in from the route}}
         {{{form}}}
         <div class="formButtonContainer">
