@@ -103,7 +103,7 @@ router.post("/login", (req, res) => {
             }
         },
         'error': (form) => {
-            req.flash("error_messages", "Sorry, there were some errors logging you in. Please try filling the form out again.");
+            // req.flash("error_messages", "Sorry, there were some errors logging you in. Please try filling the form out again.");
             res.render("users/login", {
                 'form': form.toHTML(bootstrapField)
             });

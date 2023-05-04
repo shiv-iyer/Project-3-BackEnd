@@ -33,11 +33,11 @@
                     <!-- Display the user currently logged in, otherwise ask them to log in-->
                      <div class="sm-mb-3">
                         {{#if user}}
-                            Hi, {{user.username}}
+                            Good to see you, <span class="user">{{user.username}}</span>!
                             <a href="/users/profile" class="mx-2 btn btn-primary btn-sm buttonAnimations">Profile</a>
                             <a href="/users/logout" class="me-2 btn btn-primary btn-sm buttonAnimations">Logout</a>
                         {{else}}
-                            Hi, stranger
+                            Welcome, stranger! Please sign in:
                             <a href="/users/login" class="mx-2 btn btn-primary btn-sm buttonAnimations">Login</a>
                         {{/if}}
                     </div>
