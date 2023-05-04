@@ -28,3 +28,15 @@
 #mainContainer {
     background: linear-gradient(#fffafa, #f5fffa, #fffaf0, #f5f5dc);
 }
+
+.buttonAnimations:hover {
+    transform:scale(1.17);
+    transition: all 0.3s ease;
+}
+
+.nav-item:hover {
+    background-color: lime;
+    border: 3px solid darkolivegreen;
+    border-radius: 8px;
+    transition: all 0.5s ease;
+}

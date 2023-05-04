@@ -49,15 +49,15 @@
                         {{!for update and delete}}
                         <td>
                             <div class="linkContainer">
-                                <a href="/cards/{{this.id}}/update" class="btn btn-primary btn-sm mb-2">Update</a>
-                                <a href="/cards/{{this.id}}/delete" class="btn btn-danger btn-sm">Delete</a>
+                                <a href="/cards/{{this.id}}/update" class="btn btn-primary btn-sm mb-2 buttonAnimations">Update</a>
+                                <a href="/cards/{{this.id}}/delete" class="btn btn-danger btn-sm buttonAnimations">Delete</a>
                             </div>
                         </td>
                     </tr>
                     {{/each}}
                 </tbody>
             </table>
-            <a href="/cards/create" class="btn btn-primary btn-sm">Add New Card</a>
+            <a href="/cards/create" class="btn btn-primary btn-sm buttonAnimations">Add New Card</a>
     </div>
     {{/block}}
 {{/extends}}
