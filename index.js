@@ -95,6 +95,9 @@ const cardRoute = require("./routes/cards.js");
 // next, import in the user route
 const userRoute = require("./routes/users.js");
 
+// cloudinary route for image uploading
+const cloudinaryRoute = require("./routes/cloudinary.js");
+
 // main function
 async function main() {
 
@@ -103,6 +106,8 @@ async function main() {
     app.use("/cards", cardRoute);
     // users route
     app.use("/users", userRoute);
+    // cloudinary route
+    app.use("/cloudinary", cloudinaryRoute);
 }
 
 main();

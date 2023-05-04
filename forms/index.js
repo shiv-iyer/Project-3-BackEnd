@@ -121,6 +121,14 @@ const createCardForm = (expansions, types) => {
             widget: widgets.select(),
             // choices for the widget aka the select: expansions that we passed in to the form
             choices: expansions
+        }),
+        // image url from cloudinary
+        'image_url': fields.string({
+            widget: widgets.hidden()
+        }),
+        // thumby url
+        'thumbnail_url': fields.string({
+            widget: widgets.hidden()
         })
 
 

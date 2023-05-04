@@ -11,6 +11,7 @@
                         {{!create a table heading for each column in the cards table}}
                         {{!id, name, rarity, format, condition, cost, stage, hit_points, flavor_text, image_url, thumbnail_url}}
                         <th>ID</th>
+                        <th></th>
                         <th>Name</th>
                         <th>Rarity</th>
                         <th>Format</th>
@@ -31,6 +32,7 @@
                     {{#each cards}}
                     <tr style="text-align: center">
                         <td>{{this.id}}</td>
+                        <td><img src="{{this.thumbnail_url}}"/></td>
                         <td>{{this.name}}</td>
                         <td>{{this.rarity}}</td>
                         <td>{{this.format}}</td>

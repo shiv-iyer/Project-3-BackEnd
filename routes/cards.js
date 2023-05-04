@@ -41,7 +41,10 @@ router.get("/create", checkIfAuthenticated, async (req, res) => {
     const cardForm = createCardForm(allExpansions, allTypes);
     res.render('cards/create', {
         // format the form using Bootstrap styles
-        'form': cardForm.toHTML(bootstrapField)
+        'form': cardForm.toHTML(bootstrapField),
+        cloudinaryName: process.env.CLOUDINARY_NAME,
+        cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
+        cloudinaryPreset: process.env.CLOUDINARY_UPLOAD_PRESET
     })
 });
 
@@ -111,6 +114,12 @@ router.get("/:card_id/update", async (req, res) => {
     cardForm.fields.flavor_text.value = card.get('flavor_text');
     cardForm.fields.expansion_id.value = card.get('expansion_id');
 
+    // newly added: image url!
+    cardForm.fields.image_url.value = card.get('image_url');
+
+    // thumb url
+    cardForm.fields.thumbnail_url.value = card.get('thumbnail_url');
+
     // pluck to retrieve types
     let selectedTypes = await card.related('type').pluck('id');
     cardForm.fields.types.value = selectedTypes;
@@ -121,7 +130,11 @@ router.get("/:card_id/update", async (req, res) => {
     // render the form with these updated values
     res.render('cards/update', {
         'form': cardForm.toHTML(bootstrapField),
-        'card': card.toJSON()
+        'card': card.toJSON(),
+        // same as before: pass in the cloudinary details
+        cloudinaryName: process.env.CLOUDINARY_NAME,
+        cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
+        cloudinaryPreset: process.env.CLOUDINARY_UPLOAD_PRESET
     });
 
 });
