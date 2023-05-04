@@ -14,6 +14,9 @@ const { createCardForm, bootstrapField } = require ("../forms");
 // import in the card data layer
 const cardDataLayer = require("../DAL/cards");
 
+// import in the middleware to protect the route
+const { checkIfAuthenticated } = require("../middlewares");
+
 // res.render will automatically go to the views folder,
 // because we set the view engine to handlebars, we don't need to write index.hbs, just index
 router.get("/", async (req, res) => {
@@ -29,7 +32,8 @@ router.get("/", async (req, res) => {
 });
 
 // second function for Cards, to render the form for creation
-router.get("/create", async (req, res) => {
+// we add the checkIfAuthenticated middleware in between the route
+router.get("/create", checkIfAuthenticated, async (req, res) => {
     // initialize expansions
     const allExpansions = await cardDataLayer.getAllExpansions();
     // now types too
@@ -42,7 +46,7 @@ router.get("/create", async (req, res) => {
 });
 
 // route to process the form once it's submitted
-router.post("/create", async (req, res) => {
+router.post("/create", checkIfAuthenticated, async (req, res) => {
     const allExpansions = await cardDataLayer.getAllExpansions();
     const allTypes = await cardDataLayer.getAllTypes();
     const cardForm = createCardForm(allExpansions, allTypes);

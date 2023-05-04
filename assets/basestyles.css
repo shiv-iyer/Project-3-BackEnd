@@ -24,3 +24,7 @@
     /* weird again, but flex-start is the only alignment that works, so just going for it */
     align-items: flex-start;
 }
+
+#mainContainer {
+    background: linear-gradient(#fffafa, #f5fffa, #fffaf0, #f5f5dc);
+}

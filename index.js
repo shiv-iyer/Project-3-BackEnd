@@ -61,6 +61,12 @@ app.use(function (req, res, next) {
     next();
 })
 
+// Global Middleware for index.js: share the user session data with .hbs files via res.locals
+app.use(function(req, res, next){
+    res.locals.user = req.session.user;
+    next();
+});
+
 // import the card route
 const cardRoute = require("./routes/cards.js");
 
