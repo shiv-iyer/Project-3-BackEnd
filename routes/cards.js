@@ -46,13 +46,38 @@ router.get("/", async (req, res) => {
             res.render("cards/index", {
                 'cards': cards.toJSON(),
                 'form': form.toHTML(bootstrapField)
-            })
+            });
         },
         'error': async (form) => {
-
+            let cards = await queryBuilder.fetch({
+                withRelated: ['expansion']
+            });
+            res.render("cards/index", {
+                'cards': cards.toJSON(),
+                'form': form.toHTML(bootstrapField)
+            });
         },
+        // if fields are filled in, build upon the the queryBuilder accordingly
         'success': async (form) => {
-
+            if (form.data.name)
+                queryBuilder.where('name', 'like', '%' + form.data.name + '%');
+            if (form.data.min_cost)
+                queryBuilder.where('cost', '>=', form.data.min_cost);
+            if (form.data.max_cost)
+                queryBuilder.where('cost', '<=', form.data.max_cost);
+            if (form.data.expansion_id && form.data.expansion_id != "0")
+                queryBuilder.where('expansion_id', '=', form.data.expansion_id);
+            if (form.data.type_id)
+                queryBuilder.query('join', 'cards_types', 'cards.id', 'card_id').where('type_id', 'in', form.data.type_id.split(','));
+            
+            // render with queries
+            let cards = await queryBuilder.fetch({
+                withRelated: ['expansion']
+            });
+            res.render("cards/index", {
+                'cards': cards.toJSON(),
+                'form': form.toHTML(bootstrapField)
+            });
         }
     });
 
