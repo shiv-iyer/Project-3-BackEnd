@@ -1,6 +1,11 @@
 {{#extends "base"}}
 
     {{#block "content"}}
+    {{!form}}
+    <form method="GET">
+        {{{form}}}
+        <input type="submit" class="mb-3 mt-3 btn btn-primary" value="Search"/>
+    </form>
     <div class="tableContainer p-3">
         <h1 id="tableHeader" class="tableHeader mb-3">Cards Available!</h1>
         {{!comment in hbs}}

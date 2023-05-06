@@ -151,6 +151,7 @@ const createCardForm = (expansions, types) => {
     });
 };
 
+// registration form for new users
 const createRegistrationForm = () => {
     return forms.create({
         'first_name': fields.string({
@@ -206,6 +207,7 @@ const createRegistrationForm = () => {
     })
 };
 
+// login form for existing users
 const createLoginForm = () => {
     return forms.create({
         'email': fields.string({
@@ -225,4 +227,53 @@ const createLoginForm = () => {
     });
 };
 
-module.exports = { createCardForm, createRegistrationForm, createLoginForm, bootstrapField };
+// search form for search engine
+const createSearchForm = (expansions, types) => {
+    return forms.create({
+        'name': fields.string({
+            required: false,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            }
+        }),
+        'min_cost': fields.string({
+            required: false,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            'validators': [validators.integer()]
+        }),
+        'max_cost': fields.string({
+            required: false,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            'validators': [validators.integer()]
+        }),
+        'expansion_id': fields.string({
+            label: 'Expansion',
+            required: false,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            widget: widgets.select(),
+            choices: expansions
+        }),
+        'type_id': fields.string({
+            label: 'Type',
+            required: false,
+            errorAfterField: true,
+            cssClasses: {
+                label: ['form-label']
+            },
+            widget: widgets.multipleSelect(),
+            choices: types
+        })
+    })
+};
+
+module.exports = { createCardForm, createRegistrationForm, createLoginForm, createSearchForm, bootstrapField };

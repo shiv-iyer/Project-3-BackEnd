@@ -9,7 +9,7 @@ const router = express.Router();
 const {Card} = require('../models');
 
 // import in forms
-const { createCardForm, bootstrapField } = require ("../forms");
+const { createCardForm, createSearchForm, bootstrapField } = require ("../forms");
 
 // import in the card data layer
 const cardDataLayer = require("../DAL/cards");
@@ -23,12 +23,43 @@ router.get("/", async (req, res) => {
     // ★ Step #2: fetch all of the cards (ie. executes the following SQL code: SELECT * from cards)
     // (refactored to go into the DAL)
     const cards = await cardDataLayer.getAllCards();
-    // console.log(cards.toJSON());
-    // const cards = await Card.collection().fetch();
-    // ★ Step #3: convert the retrieved collection to JSON, and pass it to the index.hbs file in the cards folder within views
-    res.render("cards/index", {
-        'cards': cards.toJSON()
+
+    // ----- search engine -----
+    // get all of the expansions
+    const allExpansions = await cardDataLayer.getAllExpansions();
+    // manually add in a new expansion, which represents no expansion selected
+    // allExpansions.unshift(0, '----');
+
+    // get all of the types
+    const allTypes = await cardDataLayer.getAllTypes();
+
+    // create search form
+    let searchForm = createSearchForm(allExpansions, allTypes);
+    // create a 'query builder': by default, will just do 'SELECT * from cards'
+    let queryBuilder = Card.collection();
+
+    searchForm.handle(req, {
+        'empty': async (form) => {
+            let cards = await queryBuilder.fetch({
+                withRelated: ['expansion']
+            });
+            res.render("cards/index", {
+                'cards': cards.toJSON(),
+                'form': form.toHTML(bootstrapField)
+            })
+        },
+        'error': async (form) => {
+
+        },
+        'success': async (form) => {
+
+        }
     });
+
+    // ★ Step #3: convert the retrieved collection to JSON, and pass it to the index.hbs file in the cards folder within views
+    // res.render("cards/index", {
+    //     'cards': cards.toJSON()
+    // });
 });
 
 // second function for Cards, to render the form for creation
