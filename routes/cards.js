@@ -9,7 +9,7 @@ const router = express.Router();
 const {Card} = require('../models');
 
 // import in forms
-const { createCardForm, bootstrapField } = require ("../forms");
+const { createCardForm, createSearchForm, bootstrapField } = require ("../forms");
 
 // import in the card data layer
 const cardDataLayer = require("../DAL/cards");
@@ -23,8 +23,31 @@ router.get("/", async (req, res) => {
     // ★ Step #2: fetch all of the cards (ie. executes the following SQL code: SELECT * from cards)
     // (refactored to go into the DAL)
     const cards = await cardDataLayer.getAllCards();
-    // console.log(cards.toJSON());
-    // const cards = await Card.collection().fetch();
+
+    // ----- search engine -----
+    // get all of the expansions
+    const allExpansions = await cardDataLayer.getAllExpansions();
+    // manually add in a new expansion, which represents no expansion selected
+    allExpansions.unshift(0, '-----');
+
+    // get all of the types
+    const allTypes = await cardDataLayer.getAllTypes();
+
+    // create search form
+    let searchForm = createSearchForm(allExpansions, allTypes);
+
+    searchForm.handle(req, {
+        'empty': async (form) => {
+
+        },
+        'error': async (form) => {
+
+        },
+        'success': async (form) => {
+
+        }
+    });
+
     // ★ Step #3: convert the retrieved collection to JSON, and pass it to the index.hbs file in the cards folder within views
     res.render("cards/index", {
         'cards': cards.toJSON()
