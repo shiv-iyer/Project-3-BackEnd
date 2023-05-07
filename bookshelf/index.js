@@ -4,12 +4,12 @@
 
 // Set up the database connection; details should match those in database.json
 const knex = require('knex')({
-    client: 'mysql',
+    client: process.env.DB_DRIVER,
     connection: {
-        user: 'foo',
-        password: 'bar',
-        database: 'pokeport',
-        host: '127.0.0.1'
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_DATABASE,
+        host: process.env.DB_HOST
     }
 });
 

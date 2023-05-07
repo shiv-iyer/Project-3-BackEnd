@@ -4,6 +4,15 @@
 // import in models related to cards
 const {Card, Expansion, Type} = require("../models");
 
+const getCardByID = async (cardID) => {
+    const card = await Card.where({
+        'id': parseInt(cardID)
+    }).fetch({
+        require: true,
+        withRelated: ['expansion', 'type']
+    });
+    return card;
+}
 
 const getAllCards = async () => {
     const cards = await Card.collection().fetch({withRelated: ['expansion', 'type']});
