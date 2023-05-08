@@ -10,7 +10,7 @@ cloudinary.config({
 });
 
 // router.get sign
-router.get('/sign', async (req,res)=>{
+router.get('/sign', async (req, res)=>{
     // retrieve the parameters we need to send to cloudinary
     const params_to_sign = JSON.parse(req.query.params_to_sign);
 

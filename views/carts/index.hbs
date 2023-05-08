@@ -1,0 +1,19 @@
+{{#extends "base"}}
+
+{{#block "content"}}
+<h1>My Shopping Cart</h1>
+
+<ul class="list-group">
+    {{#each shoppingCart}}
+    <li class="list-group-item my-3">
+        <h4>{{this.card.name}}</h4>
+        <h5>Expansion: {{this.card.expansion.name}}</h5>
+        <h5>Cost: {{this.card.cost}}</h5>
+        <h5>Quantity: {{this.quantity}}</h5>
+    </li>
+    {{/each}}
+</ul>
+
+{{/block}}
+
+{{/extends}}

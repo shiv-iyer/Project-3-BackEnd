@@ -98,6 +98,9 @@ const userRoute = require("./routes/users.js");
 // cloudinary route for image uploading
 const cloudinaryRoute = require("./routes/cloudinary.js");
 
+// cart route for shopping cart
+const cartRoute = require("./routes/shoppingCart.js");
+
 // main function
 async function main() {
 
@@ -108,6 +111,8 @@ async function main() {
     app.use("/users", userRoute);
     // cloudinary route
     app.use("/cloudinary", cloudinaryRoute);
+    // shopping cart route
+    app.use("/cart", cartRoute);
 }
 
 main();
