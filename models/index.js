@@ -17,6 +17,9 @@ const Card = bookshelf.model('Card', {
     // many to many with types
     type() {
         return this.belongsToMany("Type");
+    },
+    order_item() {
+        this.hasMany("OrderItem");
     }
 });
 
@@ -42,7 +45,10 @@ const Type = bookshelf.model('Type', {
 
 // User Model
 const User = bookshelf.model('User', {
-    tableName: 'users'
+    tableName: 'users',
+    order() {
+        return this.hasMany('Order');
+    }
 });
 
 // Cart Items Model
@@ -53,5 +59,41 @@ const CartItem = bookshelf.model('CartItem', {
     }
 });
 
+// ----- ORDER MODELS -----
+
+// Order Status Model
+const OrderStatus = bookshelf.model('OrderStatus', {
+    tableName: 'order_status',
+    order() {
+        return this.hasMany('Order');
+    }
+});
+
+// Order Model
+const Order = bookshelf.model('Order', {
+    tableName: 'orders',
+    user() {
+        return this.belongsTo('User');
+    },
+    order_status() {
+        return this.belongsTo('OrderStatus');
+    },
+    order_item() {
+        return this.hasMany('OrderItem');
+    }
+});
+
+// Order Item Model
+const OrderItem = bookshelf.model('OrderItem', {
+    tableName: 'order_items',
+    order() {
+        return this.belongsTo('Order');
+    },
+    card() {
+        return this.belongsTo('Card');
+    }
+});
+
+
 // export the Card object that stores the Card model out
-module.exports = {Card, Expansion, Type, User, CartItem};
+module.exports = {Card, Expansion, Type, User, CartItem, OrderStatus, Order, OrderItem};
