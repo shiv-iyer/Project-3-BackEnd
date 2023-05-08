@@ -71,7 +71,16 @@ app.use(function(req, res, next){
 });
 
 // Enable csrf for all routes
-app.use(csrf());
+// OLD app.use(csrf());
+const csurfInstance = csrf();
+app.use(function(req,res,next){
+  console.log("checking for csrf exclusion")
+  // exclude whatever url we want from CSRF protection
+  if (req.url === "/checkout/process_payment") {
+    return next();
+  }
+  csurfInstance(req,res,next);
+})
 
 // handle csrf error
 app.use(function (err, req, res, next) {
@@ -85,7 +94,10 @@ app.use(function (err, req, res, next) {
 
 // Global Middleware for index.js: share the CSRF Token with .hbs files via res.locals
 app.use(function(req, res, next){
-    res.locals.csrfToken = req.csrfToken();
+    if (req.csrfToken) {
+        res.locals.csrfToken = req.csrfToken();
+    }
+    
     next();
 });
 
@@ -101,6 +113,9 @@ const cloudinaryRoute = require("./routes/cloudinary.js");
 // cart route for shopping cart
 const cartRoute = require("./routes/shoppingCart.js");
 
+// checkout route for Stripe checkout
+const checkoutRoute = require("./routes/checkout.js");
+
 // main function
 async function main() {
 
@@ -113,6 +128,8 @@ async function main() {
     app.use("/cloudinary", cloudinaryRoute);
     // shopping cart route
     app.use("/cart", cartRoute);
+    // checkout route
+    app.use("/checkout", checkoutRoute);
 }
 
 main();
