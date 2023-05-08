@@ -41,7 +41,7 @@ router.get("/", async (req, res) => {
     searchForm.handle(req, {
         'empty': async (form) => {
             let cards = await queryBuilder.fetch({
-                withRelated: ['expansion']
+                withRelated: ['expansion', 'type']
             });
             res.render("cards/index", {
                 'cards': cards.toJSON(),
@@ -50,7 +50,7 @@ router.get("/", async (req, res) => {
         },
         'error': async (form) => {
             let cards = await queryBuilder.fetch({
-                withRelated: ['expansion']
+                withRelated: ['expansion', 'type']
             });
             res.render("cards/index", {
                 'cards': cards.toJSON(),
@@ -72,7 +72,7 @@ router.get("/", async (req, res) => {
             
             // render with queries
             let cards = await queryBuilder.fetch({
-                withRelated: ['expansion']
+                withRelated: ['expansion', 'type']
             });
             res.render("cards/index", {
                 'cards': cards.toJSON(),

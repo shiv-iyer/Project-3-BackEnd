@@ -19,6 +19,10 @@ const getAllCards = async () => {
     return cards;
 };
 
+// WIP
+/*const addCard = async (card) => {
+
+}*/
 
 const getAllExpansions = async () => {
     // the reason we map is because of the Caolan Form: the way they read selects, so you need to return an array
