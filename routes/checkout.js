@@ -95,7 +95,7 @@ router.post('/process_payment', express.raw({type: 'application/json'}), async (
     }
     if (event.type == 'checkout.session.completed') {
         let stripeSession = event.data.object;
-        console.log(stripeSession);
+        // console.log(stripeSession);
         
         // process stripeSession
         const paymentIntent = await Stripe.paymentIntents.retrieve(stripeSession.payment_intent);
@@ -125,6 +125,20 @@ router.post('/process_payment', express.raw({type: 'application/json'}), async (
         };
 
         const newOrder = await orderDataLayer.addOrder(orderData);
+        // this is to change the metadata into json format
+        const orderItems = JSON.parse(stripeSession.metadata.orders);
+        console.log("orderItems:", orderItems);
+
+        // this is to get order id using the stripeSession's id
+        const orderDetails = await orderDataLayer.getOrderWithStripeID(stripeSession.id);
+
+        // since orderItems is an array, we use a for loop to loop through to array and individually add each order item
+        orderItems.forEach(order => {
+            console.log(order)
+            const newItem = orderDataLayer.addOrderItem(orderDetails.id, order.card_id, order.quantity);
+        })
+
+        
 
     }
     res.send({ received: true });

@@ -15,4 +15,26 @@ const addOrder = async (orderInfo) => {
     return order;
 }
 
-module.exports = { getAllOrders, addOrder };
+const getOrderWithStripeID = async (stripeId) => {
+    const orderId = await Order.where({
+        "stripe_id": stripeId
+    }).fetch({
+        require: true
+    })
+
+    return orderId;
+};
+
+const addOrderItem = async (orderId, cardId, quantity) => {
+    const item = new OrderItem({
+        "order_id": orderId,
+        "card_id": cardId,
+        "quantity": quantity
+    });
+    // make sure to always save
+    await item.save();
+    return item;
+}
+
+
+module.exports = { getAllOrders, addOrder, getOrderWithStripeID, addOrderItem };

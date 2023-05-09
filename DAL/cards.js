@@ -19,6 +19,7 @@ const getAllCards = async () => {
     return cards;
 };
 
+
 // WIP
 /*const addCard = async (card) => {
 
