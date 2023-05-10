@@ -76,7 +76,8 @@ const csurfInstance = csrf();
 app.use(function(req,res,next){
   console.log("checking for csrf exclusion")
   // exclude whatever url we want from CSRF protection
-  if (req.url === "/checkout/process_payment") {
+  // now, we also exclude API
+  if (req.url === "/checkout/process_payment" || req.url.slice(0,5) =="/api/") {
     return next();
   }
   csurfInstance(req,res,next);
@@ -116,6 +117,11 @@ const cartRoute = require("./routes/shoppingCart.js");
 // checkout route for Stripe checkout
 const checkoutRoute = require("./routes/checkout.js");
 
+// API
+const api = {
+    cards: require("./routes/API/cards.js")
+};
+
 // main function
 async function main() {
 
@@ -130,6 +136,9 @@ async function main() {
     app.use("/cart", cartRoute);
     // checkout route
     app.use("/checkout", checkoutRoute);
+
+    // API routes — use express.json middleware to convert content in req.body to json
+    app.use("/api/cards", express.json(), api.cards);
 }
 
 main();
