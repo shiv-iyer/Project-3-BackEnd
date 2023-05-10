@@ -94,6 +94,10 @@ const OrderItem = bookshelf.model('OrderItem', {
     }
 });
 
+const BlacklistedToken = bookshelf.model('BlacklistedToken', {
+    tableName: 'blacklisted_tokens'
+});
+
 
 // export the Card object that stores the Card model out
-module.exports = {Card, Expansion, Type, User, CartItem, OrderStatus, Order, OrderItem};
+module.exports = {Card, Expansion, Type, User, CartItem, OrderStatus, Order, OrderItem, BlacklistedToken};
