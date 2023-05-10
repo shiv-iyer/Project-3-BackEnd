@@ -119,7 +119,8 @@ const checkoutRoute = require("./routes/checkout.js");
 
 // API
 const api = {
-    cards: require("./routes/API/cards.js")
+    cards: require("./routes/API/cards.js"),
+    users: require("./routes/API/users.js")
 };
 
 // main function
@@ -139,6 +140,7 @@ async function main() {
 
     // API routes — use express.json middleware to convert content in req.body to json
     app.use("/api/cards", express.json(), api.cards);
+    app.use("/api/users", express.json(), api.users);
 }
 
 main();
