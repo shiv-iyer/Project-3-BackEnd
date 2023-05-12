@@ -4,6 +4,9 @@ const hbs = require("hbs");
 const wax = require('wax-on');
 require("dotenv").config();
 
+// cors
+const cors = require('cors');
+
 // other requirements: for session
 const session = require("express-session");
 const flash = require("connect-flash");
@@ -44,6 +47,9 @@ app.use(
         extended: false
     })
 );
+
+// use cors BEFORE sessions
+app.use(cors());
 
 // set up sessions, before importing routes
 app.use(session({

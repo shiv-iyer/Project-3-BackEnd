@@ -6,6 +6,9 @@ const jwt = require("jsonwebtoken");
 // Middleware auth
 const {checkIfAuthenticatedJWT} = require ("../../middlewares");
 
+// user and blacklisted token models
+const { User, BlacklistedToken } = require ("../../models");
+
 const generateAccessToken = (user) => {
     return jwt.sign({
         'username': user.get('username'),
@@ -32,8 +35,6 @@ const getHashedPassword = (password) => {
     const hash = sha256.update(password).digest("base64");
     return hash;
 };
-
-const { User } = require("../../models");
 
 router.post("/login", async (req, res) => {
     console.log(req.body)
@@ -67,6 +68,62 @@ router.post("/login", async (req, res) => {
 router.get("/profile", checkIfAuthenticatedJWT, async (req, res) => {
     const user = req.user;
     res.send(user);
+});
+
+// allow the client to get a new access token
+router.post("/refresh", async (req, res) => {
+    let refreshToken = req.body.refreshToken;
+    // prevent access if no refresh token
+    if (!refreshToken) {
+        res.sendStatus(401);
+    }
+
+    // check if the refresh token has been blacklisted
+    let blacklistedToken = await BlacklistedToken.where({
+        'token': refreshToken
+    }).fetch({
+        require: false
+    });
+
+    // if the refresh token has already been blacklisted, don't proceed.
+    if (blacklistedToken) {
+        res.status(401);
+        return res.send("The refresh token has already expired.");
+    }
+
+    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+        if (err) {
+            return res.sendStatus(403);
+        }
+
+        let accessToken = generateAccessToken(user, process.env.TOKEN_SECRET, "15m");
+        res.send({
+            accessToken
+        });
+    });
+});
+
+// route for logout; add refresh token to a black list
+router.post("/logout", async (req, res) => {
+    let refreshToken = req.body.refreshToken;
+    if (!refreshToken) {
+        res.sendStatus(401);
+    } else { 
+        jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, async (err, user) => {
+            if (err) {
+                return res.sendStatus(403);
+            }
+
+            const token = new BlacklistedToken();
+            // set columns in the blacklisted token table. for date, use current date
+            token.set('token', refreshToken);
+            token.set('date_created', new Date ());
+            await token.save();
+            res.send({
+                'message': 'User logged out'
+            });
+        });
+    }
 });
 
 module.exports = router;
