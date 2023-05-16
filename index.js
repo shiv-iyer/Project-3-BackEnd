@@ -51,6 +51,7 @@ app.use(
 // use cors BEFORE sessions
 app.use(cors());
 
+
 // set up sessions, before importing routes
 app.use(session({
     store: new FileStore(),

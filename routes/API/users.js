@@ -37,6 +37,7 @@ const getHashedPassword = (password) => {
 };
 
 router.post("/login", async (req, res) => {
+    console.log("it was called");
     console.log(req.body)
     let user = await User.where({
         'email': req.body.email
@@ -55,14 +56,26 @@ router.post("/login", async (req, res) => {
         // use the general function; specify different expiration timings for each and send them to the user
         let accessToken = generateToken(user.toJSON(), process.env.TOKEN_SECRET, '15m');
         let refreshToken = generateToken(user.toJSON(), process.env.REFRESH_TOKEN_SECRET, '7d');
-        res.send({
-            accessToken, refreshToken
+        res.json({
+            "accessToken": accessToken, "refreshToken": refreshToken
         });
     } else {
         res.send({
             'error': 'Wrong email or password'
         });
     }
+});
+
+// need a register route... missing
+router.post("/register", async (req, res) => {
+    let { password, ...userData } = req.body;
+    const user = new User({
+        ... userData,
+        "password": getHashedPassword(password)
+    });
+
+    await user.save();
+    res.send(user);
 });
 
 router.get("/profile", checkIfAuthenticatedJWT, async (req, res) => {
@@ -96,7 +109,7 @@ router.post("/refresh", async (req, res) => {
             return res.sendStatus(403);
         }
 
-        let accessToken = generateAccessToken(user, process.env.TOKEN_SECRET, "15m");
+        let accessToken = generateToken(user, process.env.TOKEN_SECRET, "15m");
         res.send({
             accessToken
         });

@@ -8,7 +8,8 @@
     "//comment": "-g is only for gitpod",
     "monitor": "npm i nodemon && nodemon index.js",
     "//comment_2": "we can use NPM scripts to configure the shell script for running migrations. to run: `npm run migrate -- up` etc.",
-    "migrate": "node node_modules/db-migrate/bin/db-migrate"
+    "migrate": "node node_modules/db-migrate/bin/db-migrate",
+    "newmon": "npm install -g nodemon && nodemon --ignore sessions"
   },
   "keywords": [],
   "author": "",

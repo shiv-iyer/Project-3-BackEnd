@@ -9,7 +9,7 @@ const { createCardForm } = require("../../forms/index");
 
 router.get("/", async (req, res) => {
     res.send(await cardDataLayer.getAllCards());
-});
+}); 
 
 router.post("/", async (req, res) => {
     const allExpansions = cardDataLayer.getAllExpansions();
