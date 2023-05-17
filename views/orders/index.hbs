@@ -10,6 +10,7 @@
             <th>Order Date</th>
             <th>Shipping Details</th>
             <th>Payment Type</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -29,6 +30,9 @@
                     {{/if}}
                 </td>
                 <td>{{this.payment_type}}</td>
+                <td>
+                    <a href="" class="btn btn-primary btn-sm">Update</a>
+                </td>
             </tr>
         {{/each}}
     </tbody>
