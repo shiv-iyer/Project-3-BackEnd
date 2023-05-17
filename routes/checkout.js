@@ -19,7 +19,7 @@ const Stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 // import in the middleware to protect the route
 const { checkIfAuthenticated } = require("../middlewares");
 
-router.get("/", checkIfAuthenticated, async (req, res) => {
+router.get("/", async (req, res) => {
     // create cart service object
     const cart = new CartServices(req.session.user.id);
 
