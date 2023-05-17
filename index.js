@@ -128,6 +128,9 @@ const cartRoute = require("./routes/shoppingCart.js");
 // checkout route for Stripe checkout
 const checkoutRoute = require("./routes/checkout.js");
 
+// order route for order displays
+const orderRoute = require("./routes/orders.js");
+
 // API
 const api = {
     cards: require("./routes/API/cards.js"),
@@ -149,6 +152,8 @@ async function main() {
     app.use("/cart", cartRoute);
     // checkout route
     app.use("/checkout", checkoutRoute);
+    // order route
+    app.use("/order", orderRoute);
 
     // API routes — use express.json middleware to convert content in req.body to json
     app.use("/api/cards", express.json(), api.cards);

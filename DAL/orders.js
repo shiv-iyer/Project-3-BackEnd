@@ -7,6 +7,7 @@ const getAllOrders = async () => {
         require: false,
         withRelated: ["user", "order_status"]
     });
+    return orders;
 };
 
 const addOrder = async (orderInfo) => {
