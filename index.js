@@ -49,7 +49,11 @@ app.use(
 );
 
 // use cors BEFORE sessions
-app.use(cors());
+// origin: 'http://localhost:3010'
+var corsOptions = {
+        origin: 'http://localhost:3010'
+    };
+app.use(cors(corsOptions));
 
 
 // set up sessions, before importing routes
@@ -81,7 +85,7 @@ app.use(function(req, res, next){
 // OLD app.use(csrf());
 const csurfInstance = csrf();
 app.use(function(req,res,next){
-  console.log("checking for csrf exclusion")
+    console.log(`checking for csrf exclusion with req.url ${req.url}`);
   // exclude whatever url we want from CSRF protection
   // now, we also exclude API
   if (req.url === "/checkout/process_payment" || req.url.slice(0,5) =="/api/") {
