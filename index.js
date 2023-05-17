@@ -135,7 +135,8 @@ const orderRoute = require("./routes/orders.js");
 const api = {
     cards: require("./routes/API/cards.js"),
     users: require("./routes/API/users.js"),
-    carts: require("./routes/API/cart.js")
+    carts: require("./routes/API/cart.js"),
+    orders: require("./routes/API/orders.js")
 };
 
 // main function
@@ -159,7 +160,8 @@ async function main() {
     app.use("/api/cards", express.json(), api.cards);
     app.use("/api/users", express.json(), api.users);
     app.use("/api/carts", express.json(), api.carts);
-    // todo: orders, checkout
+    app.use("/api/orders", express.json(), api.orders);
+    // todo: checkout
 }
 
 main();

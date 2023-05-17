@@ -35,7 +35,18 @@ const addOrderItem = async (orderId, cardId, quantity) => {
     // make sure to always save
     await item.save();
     return item;
-}
+};
+
+const getOrderByUserID = async (userID) => {
+    const orders = await Order.collection().where({
+        "user_id": userID
+    }).fetch({
+        require: false,
+        withRelated: ["order_status"]
+    });
+
+    return orders;
+};
 
 
-module.exports = { getAllOrders, addOrder, getOrderWithStripeID, addOrderItem };
+module.exports = { getAllOrders, addOrder, getOrderWithStripeID, addOrderItem, getOrderByUserID };

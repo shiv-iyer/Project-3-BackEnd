@@ -13,7 +13,24 @@
         </tr>
     </thead>
     <tbody>
-
+        {{#each orders}}
+            <tr>
+                <td>{{this.id}}</td>
+                <td>{{this.user.username}}</td>
+                <td>${{this.total_cost}}</td>
+                <td>{{this.order_date}}</td>
+                <td>
+                    {{!conditional rendering}}
+                    {{#if this.shipping_address_line_2}}
+                        {{this.shipping_address_line_1}}
+                        {{this.shipping_address_line_2}}
+                    {{else}}
+                        {{this.shipping_address_line_1}}
+                    {{/if}}
+                </td>
+                <td>{{this.payment_type}}</td>
+            </tr>
+        {{/each}}
     </tbody>
 </table>
 {{/block}}
