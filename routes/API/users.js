@@ -37,7 +37,6 @@ const getHashedPassword = (password) => {
 };
 
 router.post("/login", async (req, res) => {
-    console.log("it was called");
     console.log(req.body)
     let user = await User.where({
         'email': req.body.email

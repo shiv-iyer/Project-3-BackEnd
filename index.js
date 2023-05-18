@@ -142,6 +142,9 @@ const api = {
 // main function
 async function main() {
 
+    app.get("/", async (req, res) => {
+        res.redirect("/cards")
+    });
     // instead of app.get, we use app.use because we are using our route
     // all the app.gets will be inside the routes
     app.use("/cards", cardRoute);
