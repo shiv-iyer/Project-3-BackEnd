@@ -51,7 +51,7 @@ app.use(
 // use cors BEFORE sessions
 // origin: 'http://localhost:3010'
 var corsOptions = {
-        origin: 'http://localhost:3010'
+        origin: 'https://poke-port.netlify.app'
     };
 app.use(cors(corsOptions));
 
