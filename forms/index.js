@@ -41,7 +41,7 @@ const createCardForm = (expansions, types) => {
                 label: ['form-label']
             },
             // try validating for max length, doesn't seem to work...
-            'validators': [validators.maxlength(5, "Your card's name cannot exceed 5 characters!")]
+            'validators': [validators.maxlength(50, "Your card's name cannot exceed 50 characters!")]
         }),
         'rarity': fields.string({
             required: validators.required("Please enter your card's rarity!"),
