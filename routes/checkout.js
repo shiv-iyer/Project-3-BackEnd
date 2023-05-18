@@ -19,9 +19,9 @@ const Stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 // import in the middleware to protect the route
 const { checkIfAuthenticated } = require("../middlewares");
 
-router.get("/", async (req, res) => {
+router.get("/:user_id/checkout", async (req, res) => {
     // create cart service object
-    const cart = new CartServices(req.session.user.id);
+    const cart = new CartServices(req.params.user_id);
 
     // get all items from the cart
     let items = await cart.getCart();
@@ -51,7 +51,7 @@ router.get("/", async (req, res) => {
         // save the quantity data along with the card id
         meta.push({
             // save user id in metadata
-            'user_id': req.session.user.id,
+            'user_id': req.params.user_id,
             'card_id': i.get('card_id'),
             'quantity': i.get('quantity')
         });
@@ -146,5 +146,9 @@ router.post('/process_payment', express.raw({type: 'application/json'}), async (
     }
     res.send({ received: true });
 })
+
+router.get("/success", async (req, res) => {
+        res.redirect("http://localhost:3010/cards");
+});
 
 module.exports = router;
