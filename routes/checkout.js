@@ -148,7 +148,7 @@ router.post('/process_payment', express.raw({type: 'application/json'}), async (
 })
 
 router.get("/success", async (req, res) => {
-        res.redirect("http://localhost:3010/cards");
+        res.redirect("https://poke-port.netlify.app/cards");
 });
 
 module.exports = router;
