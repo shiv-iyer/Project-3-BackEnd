@@ -22,17 +22,24 @@ router.post("/add", async (req, res) => {
     try {
         // destructure required data from req.body
         const {userID, cardID, quantity} = req.body;
+        console.log("crashed at line 25")
         let cart;
         let cartItem = await cartDataLayer.getCartItemByUserAndCard(userID, cardID);
+        console.log("crashed at line 28")
         // if item in cart, add quantity, else, create new
         if (cartItem) {
+            console.log("crashed at line 31")
             cart = await cartDataLayer.updateQuantity(userID, cardID, (cartItem.get("quantity") + quantity));
         } else {
+            console.log("crashed at line 34")
+            console.log(userID, cardID, quantity);
             cart = await cartDataLayer.createCartItem(userID, cardID, quantity);
+            console.log("crashed at line 36");
         }
         res.sendStatus(200);
     } catch (e) {
         res.sendStatus(404);
+        console.log("error here")
     }
 });
 

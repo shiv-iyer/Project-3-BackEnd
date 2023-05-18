@@ -67,14 +67,34 @@ router.post("/login", async (req, res) => {
 
 // need a register route... missing
 router.post("/register", async (req, res) => {
-    let { password, ...userData } = req.body;
-    const user = new User({
-        ... userData,
-        "password": getHashedPassword(password)
-    });
+    let reqIsNull = false;
+    try {
+        // if either of these are null, don't register in the database
+        for (deets in req.body) {
+            if (req.body[deets] === "" || !req.body[deets]){
+                reqIsNull = true;
+            }
+        }
 
-    await user.save();
-    res.send(user);
+        if (reqIsNull === false){
+            let { password, ...userData } = req.body;
+    
+            const user = new User({
+                ... userData,
+                "password": getHashedPassword(password)
+            });
+        
+            await user.save();
+    
+            // send success code to frontend
+            res.status(200).send(user);
+        } else {
+            res.send("you need to fill in the form properly");
+        }
+    } catch (e) {
+        // if error send wrong status
+        res.status(500).send("Error")
+    }
 });
 
 router.get("/profile", checkIfAuthenticatedJWT, async (req, res) => {
